@@ -6,14 +6,8 @@ from discord.ext.commands import Bot
 from discord import Game
 
 
-
-# TOKEN = 'TOKEN'
-# CR_TOKEN = 'CR_TOKEN'
 TOKEN = os.environ['TOKEN']
 CR_TOKEN = os.environ['CR_TOKEN']
-
-#TOKEN = 'NDU0MDE5MTc0NzQ3MDc4NjY3.DfnaVg.rRMcTuWdUMSg5grmMhJ9hvPhumQ'
-#CR_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODA2LCJpZGVuIjoiMjAwMjMyMTAyNzUzNDY4NDE2IiwibWQiOnt9LCJ0cyI6MTUyODMyMTg2NzYzOH0.CPCUq-RK0FEDlNdl9XUUwJ2YnnmJvwa4HJRQRue5LvM"
 BOT_PREFIX = ('?', '!')
 
 client = Bot(command_prefix=BOT_PREFIX)
