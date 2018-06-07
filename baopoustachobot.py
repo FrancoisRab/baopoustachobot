@@ -186,16 +186,16 @@ async def coffres(context):
                    "4 - " + str(upcoming_chests[3].title()) + "\n" +
                    "5 - " + str(upcoming_chests[4].title()))
 
-  # import pdb; pdb.set_trace()
-
-async def list_servers():
-    await bot.wait_until_ready()
-    while not bot.is_closed:
-        print("Current servers:")
-        for server in bot.servers:
-            print(server.name)
-        await asyncio.sleep(6000000000)
 
 
-bot.loop.create_task(list_servers())
+# async def list_servers():
+#     await bot.wait_until_ready()
+#     while not bot.is_closed:
+#         print("Current servers:")
+#         for server in bot.servers:
+#             print(server.name)
+#         await asyncio.sleep(600)
+
+
+# bot.loop.create_task(list_servers())
 bot.run(TOKEN)
