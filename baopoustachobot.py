@@ -2,8 +2,13 @@ import random
 import requests
 from discord.ext.commands import Bot
 from discord import Game
+import os
 
-TOKEN = 'NDU0MDE5MTc0NzQ3MDc4NjY3.DfnaVg.rRMcTuWdUMSg5grmMhJ9hvPhumQ'
+TOKEN = 'TOKEN'   #TOKEN = os.environ['TOKEN']
+CR_TOKEN = 'CR_TOKEN'   #CR_TOKEN = os.environ['CR_TOKEN']
+
+# TOKEN = 'NDU0MDE5MTc0NzQ3MDc4NjY3.DfnaVg.rRMcTuWdUMSg5grmMhJ9hvPhumQ'
+# CR_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODA2LCJpZGVuIjoiMjAwMjMyMTAyNzUzNDY4NDE2IiwibWQiOnt9LCJ0cyI6MTUyODMyMTg2NzYzOH0.CPCUq-RK0FEDlNdl9XUUwJ2YnnmJvwa4HJRQRue5LvM"
 BOT_PREFIX = ('?', '!')
 
 client = Bot(command_prefix=BOT_PREFIX)
@@ -30,7 +35,7 @@ async def hello(context):
 async def stats(tag):
   url = "https://api.royaleapi.com/player/" + tag
   headers = {
-      'auth': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODA2LCJpZGVuIjoiMjAwMjMyMTAyNzUzNDY4NDE2IiwibWQiOnt9LCJ0cyI6MTUyODMyMTg2NzYzOH0.CPCUq-RK0FEDlNdl9XUUwJ2YnnmJvwa4HJRQRue5LvM"
+      'auth': CR_TOKEN
       }
   response = requests.request("GET", url, headers=headers)
   data = response.json()
@@ -53,7 +58,7 @@ async def stats(tag):
 async def gdc():
   url = "https://api.royaleapi.com/clan/9C2CQYGY/war"
   headers = {
-      'auth': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODA2LCJpZGVuIjoiMjAwMjMyMTAyNzUzNDY4NDE2IiwibWQiOnt9LCJ0cyI6MTUyODMyMTg2NzYzOH0.CPCUq-RK0FEDlNdl9XUUwJ2YnnmJvwa4HJRQRue5LvM"
+      'auth': CR_TOKEN
       }
   response = requests.request("GET", url, headers=headers)
   data = response.json()
@@ -76,5 +81,19 @@ async def gdc():
                      "- " + str(battles) + " joueurs n'ont pas encore fait leur match de guerre" + "\n" +
                      " - Les Baopoustaches sont actuellement : #" + str(baopoustache_position))
 
+@client.command(description="Plus d'informations sur le clan avec !clan")
+async def clan():
+  url = "https://api.royaleapi.com/clan/9C2CQYGY"
+  headers = {
+      'auth': CR_TOKEN
+      }
+  response = requests.request("GET", url, headers=headers)
+  data = response.json()
+
+  await client.say('Info sur les Baopoustaches : \n' +
+                   "- ID: " + str(data["tag"]) + "\n" +
+                   "- Score: " + str(data["score"]) + "\n" +
+                   "- Membres: " + str(data["memberCount"]) + "/50 \n" +
+                   "- Dons: " + str(data["donations"]))
 
 client.run(TOKEN)
