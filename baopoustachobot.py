@@ -166,7 +166,7 @@ async def coffres(context):
   data = response.json()
 
 
-  await bot.say('Les prochains coffres pour cet ID (' + str(tag) + ') :' + '\n' +
+  await bot.say('Les prochains coffres pour cet ID (' + bdd[str(context.message.author)] + ') :' + '\n' +
                    "- Géant dans : " + str(data["giant"]+1) + " coffres \n" +
                    "- Epic dans : " + str(data["epic"]+1) + " coffres \n" +
                    "- Magique dans : " + str(data["magical"]+1) + " coffres \n" +
@@ -186,16 +186,4 @@ async def coffres(context):
                    "4 - " + str(upcoming_chests[3].title()) + "\n" +
                    "5 - " + str(upcoming_chests[4].title()))
 
-
-
-# async def list_servers():
-#     await bot.wait_until_ready()
-#     while not bot.is_closed:
-#         print("Current servers:")
-#         for server in bot.servers:
-#             print(server.name)
-#         await asyncio.sleep(600)
-
-
-# bot.loop.create_task(list_servers())
 bot.run(TOKEN)
