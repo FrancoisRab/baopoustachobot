@@ -72,6 +72,13 @@ async def gdc():
     top.append(team['name'])
 
   baopoustache_position = top.index("Baopoustache") + 1
+  bao_in_war = None
+  if battles > 1:
+    bao_in_war = "- " + str(battles) + " joueurs n'ont pas encore fait leur match de guerre"
+  elif battles == 1:
+    bao_in_war = "- " + str(battles) + " joueur n'a pas encore fait son match de guerre"
+  else:
+    bao_in_war = "- Tout le monde a fait son match de guerre ! GG !"
 
   if data["state"] == "notInWar":
     await client.say("Aucune guerre de clan en cours...")
@@ -82,7 +89,7 @@ async def gdc():
     await client.say("Jour de guerre : " + "\n" +
                      "- Participants : " + str(data["clan"]["participants"]) + "\n" +
                      "- Position actuelle : #" + str(baopoustache_position) + "\n" +
-                     "- " + str(battles) + " joueurs n'ont pas encore fait leur match de guerre")
+                     bao_in_war)
 
 @client.command(description="Plus d'informations sur le clan avec !clan")
 async def clan():
