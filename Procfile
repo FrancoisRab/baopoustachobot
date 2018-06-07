@@ -1,1 +1,1 @@
-worker: python baopoustachobot.py
+worker: python baopoustachobot.py --log-file -
