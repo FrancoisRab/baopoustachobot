@@ -32,7 +32,7 @@ async def hello(context):
   await client.say(random.choice(possible_responses) + context.message.author.mention)
 
 @client.command(pass_context=True,
-                description="Enregistrer votre ID avec !tag")
+                description="Enregistrer votre ID avec !tag + ID")
 async def tag(context, tag):
   #import pdb; pdb.set_trace()
   bdd[str(context.message.author)] = tag
