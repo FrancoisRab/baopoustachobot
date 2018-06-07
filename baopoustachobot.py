@@ -65,6 +65,14 @@ async def gdc():
       }
   response = requests.request("GET", url, headers=headers)
   data = response.json()
+
+  teams = data["standings"]
+  top = []
+  for team in teams:
+    top.append(team['name'])
+
+  baopoustache_position = top.index("Baopoustache") + 1
+
   if data["state"] == "notInWar":
     await client.say("Aucune guerre de clan en cours...")
   elif data["state"] == "collectionDay":
@@ -73,7 +81,8 @@ async def gdc():
     battles = data["clan"]["participants"] - data["clan"]["battlesPlayed"]
     await client.say("Jour de guerre : " + "\n" +
                      "- Participants : " + str(data["clan"]["participants"]) + "\n" +
-                     "- " + str(battles) + " joueurs n'ont pas encore fait leur match de guerre")
+                     "- " + str(battles) + " joueurs n'ont pas encore fait leur match de guerre" + "\n" +
+                     " - Les Baopoustaches sont actuellement : #" + str(baopoustache_position))
+
 
 client.run(TOKEN)
-
