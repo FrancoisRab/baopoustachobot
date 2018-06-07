@@ -26,7 +26,29 @@ async def hello(context):
   possible_responses = [
     "Une journée sans te voir, n'est pas une bonne journée ",
     "Ca me fait chaud au coeur de te voir ici ",
-    "Ah ! Bien le bonjour "
+    "Ah ! Bien le bonjour ",
+    "Le plus grand des guerriers est là ! Salut ",
+    "Hello ",
+    "Bien le bonjour ",
+    "Aaaaaaaah, c'est un honneur de te voir ici ",
+    "Que serais-je sans toi ",
+    "Tout le monde dit bonjour à "
+  ]
+
+  await client.say(random.choice(possible_responses) + context.message.author.mention)
+
+@client.command(pass_context=True,
+                aliases=['bye', 'Bye', 'Aurevoir', 'aurevoir', 'seeya', 'Seeya'],
+                description="N'oubliez pas de dire au revoir à BaopoustachoBot !")
+async def bye(context):
+  possible_responses = [
+    "Une bien belle soirée à toi ",
+    "A bientôt ",
+    "Déjà ? Je ne suis que tristesse... Au revoir ",
+    "Reviens vite ",
+    "Bye bye ",
+    "Je t'attend sagement ici, au revoir ",
+    "Ne m'oublie pas et reviens vite "
   ]
 
   await client.say(random.choice(possible_responses) + context.message.author.mention)
