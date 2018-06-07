@@ -20,7 +20,7 @@ async def on_ready():
   print("Hop " + client.user.name + " est connecté !")
 
 @client.command(pass_context=True,
-                aliases=['hi', 'salut', 'hey', 'bonjour'],
+                aliases=['hi', 'salut', 'hey', 'bonjour', 'Hello', 'Hi', 'Salut', 'Hey', 'Bonjour'],
                 description="Un peu de politesse ça ne fait de mal à personne")
 async def hello(context):
   possible_responses = [
@@ -32,6 +32,7 @@ async def hello(context):
   await client.say(random.choice(possible_responses) + context.message.author.mention)
 
 @client.command(pass_context=True,
+                aliases=['Tag'],
                 description="Enregistrer votre ID avec !tag + ID")
 async def tag(context, tag):
   #import pdb; pdb.set_trace()
@@ -41,6 +42,7 @@ async def tag(context, tag):
 
 
 @client.command(pass_context=True,
+                aliases=['Stats'],
                 description="tape !stats + ID pour obtenir les stats du joueur. ex: !stats 92JV0PL8U")
 async def stats(context):
   url = "https://api.royaleapi.com/player/" + bdd[str(context.message.author)]
@@ -64,7 +66,8 @@ async def stats(context):
 
   await client.say("Decklink : " + data["deckLink"])
 
-@client.command(description="Regarde où en est le clan dans sa guerre en cours, en tapant !gdc")
+@client.command(aliases=['Gdc', 'GDC', 'guerre', 'war', 'Guerre', 'War'],
+                description="Regarde où en est le clan dans sa guerre en cours, en tapant !gdc")
 async def gdc():
   url = "https://api.royaleapi.com/clan/9C2CQYGY/war"
   headers = {
@@ -99,7 +102,8 @@ async def gdc():
                      "- Position actuelle : #" + str(baopoustache_position) + "\n" +
                      bao_in_war)
 
-@client.command(description="Plus d'informations sur le clan avec !clan")
+@client.command(aliases=['Clan'],
+                description="Plus d'informations sur le clan avec !clan")
 async def clan():
   url = "https://api.royaleapi.com/clan/9C2CQYGY"
   headers = {
