@@ -122,7 +122,7 @@ async def coffres(tag):
                    "- Epic dans : " + str(data["epic"]+1) + " coffres \n" +
                    "- Magique dans : " + str(data["magical"]+1) + " coffres \n" +
                    "- Super Magique: " + str(data["superMagical"]+1) + " coffres \n" +
-                   "- Légendaire dans : " + str(data["legendary"]+1))
+                   "- Légendaire dans : " + str(data["legendary"]+1) + " coffres")
 
   upcoming_chests = []
 
