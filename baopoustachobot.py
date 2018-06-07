@@ -73,6 +73,8 @@ async def gdc():
 
   baopoustache_position = top.index("Baopoustache") + 1
   bao_in_war = None
+  battles = data["clan"]["participants"] - data["clan"]["battlesPlayed"]
+
   if battles > 1:
     bao_in_war = "- " + str(battles) + " joueurs n'ont pas encore fait leur match de guerre"
   elif battles == 1:
@@ -85,7 +87,6 @@ async def gdc():
   elif data["state"] == "collectionDay":
     await client.say("Jour de collection avec " + str(data["clan"]["participants"]) + " participants !")
   else:
-    battles = data["clan"]["participants"] - data["clan"]["battlesPlayed"]
     await client.say("Jour de guerre : " + "\n" +
                      "- Participants : " + str(data["clan"]["participants"]) + "\n" +
                      "- Position actuelle : #" + str(baopoustache_position) + "\n" +
