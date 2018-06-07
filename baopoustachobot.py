@@ -2,7 +2,8 @@ import random
 import requests
 import asyncio
 import os
-import discord
+import
+from discord.ext import commands
 from discord.ext.commands import Bot
 from discord import Game
 from database import bdd
@@ -43,8 +44,7 @@ async def love(ctx, user: discord.Member):
   await bot.say(str(ctx) + " vient t'offrir un doux calin " + str(user.name))
 
 @bot.command(pass_context=True,
-                aliases=['bye', 'Bye', 'Aurevoir', 'aurevoir', 'seeya', 'Seeya'],
-                description="N'oubliez pas de dire au revoir à BaopoustachoBot !")
+                aliases=['bye', 'Bye', 'Aurevoir', 'aurevoir', 'seeya', 'Seeya'])
 async def bye(context):
   possible_responses = [
     "Une bien belle soirée à toi ",
