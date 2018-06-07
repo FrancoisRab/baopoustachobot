@@ -1,1 +1,1 @@
-web: python baopoustachobot.py
+worker: python baopoustachobot.py
