@@ -7,11 +7,13 @@ from discord import Game
 
 
 
-# TOKEN = 'TOKEN'   #TOKEN = os.environ['TOKEN']
-# CR_TOKEN = 'CR_TOKEN'   #CR_TOKEN = os.environ['CR_TOKEN']
+# TOKEN = 'TOKEN'
+# CR_TOKEN = 'CR_TOKEN'
+TOKEN = os.environ['TOKEN']
+CR_TOKEN = os.environ['CR_TOKEN']
 
-TOKEN = 'NDU0MDE5MTc0NzQ3MDc4NjY3.DfnaVg.rRMcTuWdUMSg5grmMhJ9hvPhumQ'
-CR_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODA2LCJpZGVuIjoiMjAwMjMyMTAyNzUzNDY4NDE2IiwibWQiOnt9LCJ0cyI6MTUyODMyMTg2NzYzOH0.CPCUq-RK0FEDlNdl9XUUwJ2YnnmJvwa4HJRQRue5LvM"
+#TOKEN = 'NDU0MDE5MTc0NzQ3MDc4NjY3.DfnaVg.rRMcTuWdUMSg5grmMhJ9hvPhumQ'
+#CR_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODA2LCJpZGVuIjoiMjAwMjMyMTAyNzUzNDY4NDE2IiwibWQiOnt9LCJ0cyI6MTUyODMyMTg2NzYzOH0.CPCUq-RK0FEDlNdl9XUUwJ2YnnmJvwa4HJRQRue5LvM"
 BOT_PREFIX = ('?', '!')
 
 client = Bot(command_prefix=BOT_PREFIX)
@@ -117,7 +119,7 @@ async def coffres(tag):
   data = response.json()
 
 
-  await client.say('Les prochains coffre pour cet ID (' + str(tag) + ') :' + '\n' +
+  await client.say('Les prochains coffres pour cet ID (' + str(tag) + ') :' + '\n' +
                    "- Géant dans : " + str(data["giant"]+1) + " coffres \n" +
                    "- Epic dans : " + str(data["epic"]+1) + " coffres \n" +
                    "- Magique dans : " + str(data["magical"]+1) + " coffres \n" +
