@@ -94,7 +94,7 @@ async def gdc():
 
 @client.command(description="Plus d'informations sur le clan avec !clan")
 async def clan():
-  url = "https://api.royaleapi.com/clan/9C2CQYGY"
+  url = "https://api.royaleapi.com/player/" + tag + "/chests"
   headers = {
       'auth': CR_TOKEN
       }
@@ -106,6 +106,28 @@ async def clan():
                    "- Score: " + str(data["score"]) + "\n" +
                    "- Membres: " + str(data["memberCount"]) + "/50 \n" +
                    "- Dons: " + str(data["donations"]))
+
+@client.command(description="Quels seront vos prochains coffres avec !coffres + ID")
+async def coffres(tag):
+  url = "https://api.royaleapi.com/clan/9C2CQYGY"
+  headers = {
+      'auth': CR_TOKEN
+      }
+  response = requests.request("GET", url, headers=headers)
+  data = response.json()
+
+  upcoming_chests = []
+  for chest in data["upcoming"]:
+    upcoming_chests.append(chest)
+
+  await client.say('Les prochains coffre pour cet ID (' + str(tag) + ') :' + '\n' +
+                   upcoming_chests + "\n" +
+                   "- Géant dans : " + str(data["giant"]) + "coffres \n" +
+                   "- Epic dans : " + str(data["epic"]) + "coffres \n" +
+                   "- Magique dans : " + str(data["magical"]) + "coffres \n" +
+                   "- Super Magique: " + str(data["superMagical"]) + "coffres \n" +
+                   "- Légendaire dans : " + str(data["legendary"]))
+
 
 async def list_servers():
     await client.wait_until_ready()
