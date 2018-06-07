@@ -1,1 +1,1 @@
-web: python baopoustachobot.py --log-file -
+web: python baopoustachobot.py
