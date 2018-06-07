@@ -4,6 +4,7 @@ import asyncio
 import os
 from discord.ext.commands import Bot
 from discord import Game
+from database import bdd
 
 
 TOKEN = os.environ['TOKEN']
@@ -12,7 +13,6 @@ BOT_PREFIX = ('?', '!')
 
 
 client = Bot(command_prefix=BOT_PREFIX)
-bdd = {}
 
 @client.event
 async def on_ready():
