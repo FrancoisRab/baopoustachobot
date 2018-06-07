@@ -81,7 +81,7 @@ async def gdc():
     battles = data["clan"]["participants"] - data["clan"]["battlesPlayed"]
     await client.say("Jour de guerre : " + "\n" +
                      "- Participants : " + str(data["clan"]["participants"]) + "\n" +
-                     "- Position actuelle : #" + str(baopoustache_position) "\n" +
+                     "- Position actuelle : #" + str(baopoustache_position) + "\n" +
                      "- " + str(battles) + " joueurs n'ont pas encore fait leur match de guerre")
 
 @client.command(description="Plus d'informations sur le clan avec !clan")
