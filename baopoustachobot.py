@@ -2,6 +2,7 @@ import random
 import requests
 import asyncio
 import os
+import discord
 from discord.ext.commands import Bot
 from discord import Game
 from database import bdd
