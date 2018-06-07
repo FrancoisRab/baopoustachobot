@@ -112,27 +112,28 @@ async def gdc():
   response = requests.request("GET", url, headers=headers)
   data = response.json()
 
-  teams = data["standings"]
-  top = []
-  for team in teams:
-    top.append(team['name'])
-
-  baopoustache_position = top.index("Baopoustache") + 1
-  bao_in_war = None
-  battles = data["clan"]["participants"] - data["clan"]["battlesPlayed"]
-
-  if battles > 1:
-    bao_in_war = "- " + str(battles) + " joueurs n'ont pas encore fait leur match de guerre"
-  elif battles == 1:
-    bao_in_war = "- " + str(battles) + " joueur n'a pas encore fait son match de guerre"
-  else:
-    bao_in_war = "- Tout le monde a fait son match de guerre ! GG !"
 
   if data["state"] == "notInWar":
     await bot.say("Aucune guerre de clan en cours...")
   elif data["state"] == "collectionDay":
     await bot.say("Jour de collection avec " + str(data["clan"]["participants"]) + " participants !")
   else:
+    teams = data["standings"]
+    top = []
+    for team in teams:
+      top.append(team['name'])
+
+    bao_in_war = None
+    battles = data["clan"]["participants"] - data["clan"]["battlesPlayed"]
+
+    if battles > 1:
+      bao_in_war = "- " + str(battles) + " joueurs n'ont pas encore fait leur match de guerre"
+    elif battles == 1:
+      bao_in_war = "- " + str(battles) + " joueur n'a pas encore fait son match de guerre"
+    else:
+      bao_in_war = "- Tout le monde a fait son match de guerre ! GG !"
+    baopoustache_position = top.index("Baopoustache") + 1
+
     await bot.say("Jour de guerre : " + "\n" +
                      "- Participants : " + str(data["clan"]["participants"]) + "\n" +
                      "- Position actuelle : #" + str(baopoustache_position) + "\n" +
