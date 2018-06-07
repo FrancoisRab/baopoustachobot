@@ -12,14 +12,14 @@ CR_TOKEN = os.environ['CR_TOKEN']
 BOT_PREFIX = ('?', '!')
 
 
-client = Bot(command_prefix=BOT_PREFIX)
+bot = Bot(command_prefix=BOT_PREFIX)
 
-@client.event
+@bot.event
 async def on_ready():
-  await client.change_presence(game=Game(name="être le plus beau bot"))
-  print("Hop " + client.user.name + " est connecté !")
+  await bot.change_presence(game=Game(name="être le plus beau bot"))
+  print("Hop " + bot.user.name + " est connecté !")
 
-@client.command(pass_context=True,
+@bot.command(pass_context=True,
                 aliases=['hi', 'salut', 'hey', 'bonjour', 'Hello', 'Hi', 'Salut', 'Hey', 'Bonjour'],
                 description="Un peu de politesse ça ne fait de mal à personne")
 async def hello(context):
@@ -35,9 +35,13 @@ async def hello(context):
     "Tout le monde dit bonjour à "
   ]
 
-  await client.say(random.choice(possible_responses) + context.message.author.mention)
+  await bot.say(random.choice(possible_responses) + context.message.author.mention)
 
-@client.command(pass_context=True,
+@bot.command(pass_context=True)
+async def love(ctx, user: discord.Member):
+  await bot.say(str(ctx) + " vient t'offrir un doux calin " + str(user.name))
+
+@bot.command(pass_context=True,
                 aliases=['bye', 'Bye', 'Aurevoir', 'aurevoir', 'seeya', 'Seeya'],
                 description="N'oubliez pas de dire au revoir à BaopoustachoBot !")
 async def bye(context):
@@ -51,19 +55,19 @@ async def bye(context):
     "Ne m'oublie pas et reviens vite "
   ]
 
-  await client.say(random.choice(possible_responses) + context.message.author.mention)
+  await bot.say(random.choice(possible_responses) + context.message.author.mention)
 
-@client.command(pass_context=True,
+@bot.command(pass_context=True,
                 aliases=['Tag'],
                 description="Enregistrer votre ID avec !tag + ID")
 async def tag(context, tag):
   #import pdb; pdb.set_trace()
   bdd[str(context.message.author)] = tag
-  await client.say("ID : " + str(tag) + " enregistré sous le pseudo > " + str(context.message.author))
-  await client.say("Dorénavant vous pouvez utiliser !stats et !coffres")
+  await bot.say("ID : " + str(tag) + " enregistré sous le pseudo > " + str(context.message.author))
+  await bot.say("Dorénavant vous pouvez utiliser !stats et !coffres")
 
 
-@client.command(pass_context=True,
+@bot.command(pass_context=True,
                 aliases=['Stats'],
                 description="tape !stats + ID pour obtenir les stats du joueur. ex: !stats 92JV0PL8U")
 async def stats(context):
@@ -73,22 +77,22 @@ async def stats(context):
       }
   response = requests.request("GET", url, headers=headers)
   data = response.json()
-  await client.say("Les stats de " + data['name'] + ": \n" +
+  await bot.say("Les stats de " + data['name'] + ": \n" +
                    "- Trophées actuel : " + str(data['trophies']) + "\n" +
                    "- Trophées max : " + str(data["stats"]["maxTrophies"]) + "\n" +
                    "- Arène : " + str(data["arena"]["arenaID"]) + "\n" +
                    "- Carte favorite : " + data["stats"]["favoriteCard"]["name"])
 
   if data["stats"]["totalDonations"] >= 20000:
-    await client.say("Donateur hors pair avec tes " + str(data["stats"]["totalDonations"]) + " dons !")
+    await bot.say("Donateur hors pair avec tes " + str(data["stats"]["totalDonations"]) + " dons !")
   elif data["stats"]["totalDonations"] >= 5000:
-    await client.say("Donateur sympatique avec " + str(data["stats"]["totalDonations"]) + " dons !")
+    await bot.say("Donateur sympatique avec " + str(data["stats"]["totalDonations"]) + " dons !")
   else:
-    await client.say("Donateur timide avec " + str(data["stats"]["totalDonations"]) + " dons !")
+    await bot.say("Donateur timide avec " + str(data["stats"]["totalDonations"]) + " dons !")
 
-  await client.say("Decklink : " + data["deckLink"])
+  await bot.say("Decklink : " + data["deckLink"])
 
-@client.command(aliases=['Gdc', 'GDC', 'guerre', 'war', 'Guerre', 'War'],
+@bot.command(aliases=['Gdc', 'GDC', 'guerre', 'war', 'Guerre', 'War'],
                 description="Regarde où en est le clan dans sa guerre en cours, en tapant !gdc")
 async def gdc():
   url = "https://api.royaleapi.com/clan/9C2CQYGY/war"
@@ -115,16 +119,16 @@ async def gdc():
     bao_in_war = "- Tout le monde a fait son match de guerre ! GG !"
 
   if data["state"] == "notInWar":
-    await client.say("Aucune guerre de clan en cours...")
+    await bot.say("Aucune guerre de clan en cours...")
   elif data["state"] == "collectionDay":
-    await client.say("Jour de collection avec " + str(data["clan"]["participants"]) + " participants !")
+    await bot.say("Jour de collection avec " + str(data["clan"]["participants"]) + " participants !")
   else:
-    await client.say("Jour de guerre : " + "\n" +
+    await bot.say("Jour de guerre : " + "\n" +
                      "- Participants : " + str(data["clan"]["participants"]) + "\n" +
                      "- Position actuelle : #" + str(baopoustache_position) + "\n" +
                      bao_in_war)
 
-@client.command(aliases=['Clan'],
+@bot.command(aliases=['Clan'],
                 description="Plus d'informations sur le clan avec !clan")
 async def clan():
   url = "https://api.royaleapi.com/clan/9C2CQYGY"
@@ -134,13 +138,13 @@ async def clan():
   response = requests.request("GET", url, headers=headers)
   data = response.json()
 
-  await client.say('Info sur les Baopoustaches : \n' +
+  await bot.say('Info sur les Baopoustaches : \n' +
                    "- ID: " + str(data["tag"]) + "\n" +
                    "- Score: " + str(data["score"]) + "\n" +
                    "- Membres: " + str(data["memberCount"]) + "/50 \n" +
                    "- Dons: " + str(data["donations"]))
 
-@client.command(pass_context=True,
+@bot.command(pass_context=True,
                 description="Quels seront vos prochains coffres avec !coffres + ID")
 async def coffres(context):
   url = "https://api.royaleapi.com/player/" + bdd[str(context.message.author)] + "/chests"
@@ -151,7 +155,7 @@ async def coffres(context):
   data = response.json()
 
 
-  await client.say('Les prochains coffres pour cet ID (' + str(tag) + ') :' + '\n' +
+  await bot.say('Les prochains coffres pour cet ID (' + str(tag) + ') :' + '\n' +
                    "- Géant dans : " + str(data["giant"]+1) + " coffres \n" +
                    "- Epic dans : " + str(data["epic"]+1) + " coffres \n" +
                    "- Magique dans : " + str(data["magical"]+1) + " coffres \n" +
@@ -164,7 +168,7 @@ async def coffres(context):
     upcoming_chests.append(chest)
 
 
-  await client.say("Les 5 prochains coffres sont : \n" +
+  await bot.say("Les 5 prochains coffres sont : \n" +
                    "1 - " + str(upcoming_chests[0].title()) + "\n" +
                    "2 - " + str(upcoming_chests[1].title()) + "\n" +
                    "3 - " + str(upcoming_chests[2].title()) + "\n" +
@@ -174,13 +178,13 @@ async def coffres(context):
   # import pdb; pdb.set_trace()
 
 async def list_servers():
-    await client.wait_until_ready()
-    while not client.is_closed:
+    await bot.wait_until_ready()
+    while not bot.is_closed:
         print("Current servers:")
-        for server in client.servers:
+        for server in bot.servers:
             print(server.name)
         await asyncio.sleep(600)
 
 
-client.loop.create_task(list_servers())
-client.run(TOKEN)
+bot.loop.create_task(list_servers())
+bot.run(TOKEN)
