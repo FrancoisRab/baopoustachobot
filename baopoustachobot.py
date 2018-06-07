@@ -193,7 +193,7 @@ async def list_servers():
         print("Current servers:")
         for server in bot.servers:
             print(server.name)
-        await asyncio.sleep(600)
+        await asyncio.sleep(6000000000)
 
 
 bot.loop.create_task(list_servers())
