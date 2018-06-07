@@ -9,10 +9,14 @@ BOT_PREFIX = ('?', '!')
 client = Bot(command_prefix=BOT_PREFIX)
 
 
+@client.event
+async def on_ready():
+  await client.change_presence(game=Game(name="être le plus beau bot"))
+  print("Hop " + client.user.name + " est connecté !")
 
 @client.command(pass_context=True,
-                aliases=['hi', 'salut', 'hey', 'bonjour'])
-
+                aliases=['hi', 'salut', 'hey', 'bonjour'],
+                description="Un peu de politesse ça ne fait de mal à personne")
 async def hello(context):
   possible_responses = [
     "Une journée sans te voir, n'est pas une bonne journée ",
@@ -22,19 +26,7 @@ async def hello(context):
 
   await client.say(random.choice(possible_responses) + context.message.author.mention)
 
-
-
-@client.command()
-async def square(number):
-  squared_value = int(number) * int(number)
-  await client.say(str(number) + ' au carré est égal à : ' + str(squared_value))
-
-@client.event
-async def on_ready():
-  await client.change_presence(game=Game(name="être le plus beau bot"))
-  print("Hop " + client.user.name + " est connecté !")
-
-@client.command()
+@client.command(description="tape !stats + ID pour obtenir les stats du joueur. ex: !stats 92JV0PL8U")
 async def stats(tag):
   url = "https://api.royaleapi.com/player/" + tag
   headers = {
@@ -57,7 +49,7 @@ async def stats(tag):
 
   await client.say("Decklink : " + data["deckLink"])
 
-@client.command()
+@client.command(description="Regarde où en est le clan dans sa guerre en cours, en tapant !gdc")
 async def gdc():
   url = "https://api.royaleapi.com/clan/9C2CQYGY/war"
   headers = {
