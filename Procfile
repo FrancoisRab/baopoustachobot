@@ -1,1 +1,1 @@
-web: python baopoustachobot.py $PORT
+worker: python baopoustachobot.py
