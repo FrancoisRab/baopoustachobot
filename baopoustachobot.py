@@ -2,7 +2,7 @@ import random
 import requests
 import asyncio
 import os
-import
+import discord
 from discord.ext import commands
 from discord.ext.commands import Bot
 from discord import Game
@@ -13,17 +13,16 @@ TOKEN = os.environ['TOKEN']
 CR_TOKEN = os.environ['CR_TOKEN']
 BOT_PREFIX = ('?', '!')
 
-
 bot = Bot(command_prefix=BOT_PREFIX)
 
 @bot.event
 async def on_ready():
-  await bot.change_presence(game=Game(name="être le plus beau bot"))
+  await bot.change_presence(game=Game(name="Clash Royale"))
   print("Hop " + bot.user.name + " est connecté !")
 
 @bot.command(pass_context=True,
-                aliases=['hi', 'salut', 'hey', 'bonjour', 'Hello', 'Hi', 'Salut', 'Hey', 'Bonjour'],
-                description="Un peu de politesse ça ne fait de mal à personne")
+             aliases=['hi', 'salut', 'hey', 'bonjour', 'Hello', 'Hi', 'Salut', 'Hey', 'Bonjour'],
+             description="Un peu de politesse ça ne fait de mal à personne")
 async def hello(context):
   possible_responses = [
     "Une journée sans te voir, n'est pas une bonne journée ",
@@ -39,12 +38,22 @@ async def hello(context):
 
   await bot.say(random.choice(possible_responses) + context.message.author.mention)
 
-@bot.command(pass_context=True)
+@bot.command(pass_context=True,
+             aliases=['Love'],
+             description="ex: !love @Pesko pour lui dévoiler vos sentiments")
 async def love(ctx, user: discord.Member):
-  await bot.say(str(ctx) + " vient t'offrir un doux calin " + str(user.name))
+  possible_responses = [
+    " tente une approche délicate envers ",
+    " met un genoux à terre, et chante sa plus belle sérénade à ",
+    " apprécie la présence sur le serveur de ",
+    " chuchotte des mots doux à l'oreille de "
+  ]
+  await bot.say(str(ctx.message.author.mention) + random.choice(possible_responses) + user.mention)
+
 
 @bot.command(pass_context=True,
-                aliases=['bye', 'Bye', 'Aurevoir', 'aurevoir', 'seeya', 'Seeya'])
+             description="Dites au revoir au plus beaux des BOTs !",
+             aliases=['Bye', 'Aurevoir', 'aurevoir', 'seeya', 'Seeya'])
 async def bye(context):
   possible_responses = [
     "Une bien belle soirée à toi ",
@@ -59,8 +68,8 @@ async def bye(context):
   await bot.say(random.choice(possible_responses) + context.message.author.mention)
 
 @bot.command(pass_context=True,
-                aliases=['Tag'],
-                description="Enregistrer votre ID avec !tag + ID")
+             aliases=['Tag'],
+             description="Enregistrer votre ID avec !tag + ID")
 async def tag(context, tag):
   #import pdb; pdb.set_trace()
   bdd[str(context.message.author)] = tag
@@ -69,8 +78,8 @@ async def tag(context, tag):
 
 
 @bot.command(pass_context=True,
-                aliases=['Stats'],
-                description="tape !stats + ID pour obtenir les stats du joueur. ex: !stats 92JV0PL8U")
+             aliases=['Stats'],
+             description="tape !stats + ID pour obtenir les stats du joueur. ex: !stats 92JV0PL8U")
 async def stats(context):
   url = "https://api.royaleapi.com/player/" + bdd[str(context.message.author)]
   headers = {
@@ -94,7 +103,7 @@ async def stats(context):
   await bot.say("Decklink : " + data["deckLink"])
 
 @bot.command(aliases=['Gdc', 'GDC', 'guerre', 'war', 'Guerre', 'War'],
-                description="Regarde où en est le clan dans sa guerre en cours, en tapant !gdc")
+             description="Regarde où en est le clan dans sa guerre en cours, en tapant !gdc")
 async def gdc():
   url = "https://api.royaleapi.com/clan/9C2CQYGY/war"
   headers = {
@@ -130,7 +139,7 @@ async def gdc():
                      bao_in_war)
 
 @bot.command(aliases=['Clan'],
-                description="Plus d'informations sur le clan avec !clan")
+             description="Plus d'informations sur le clan avec !clan")
 async def clan():
   url = "https://api.royaleapi.com/clan/9C2CQYGY"
   headers = {
@@ -146,7 +155,7 @@ async def clan():
                    "- Dons: " + str(data["donations"]))
 
 @bot.command(pass_context=True,
-                description="Quels seront vos prochains coffres avec !coffres + ID")
+             description="Quels seront vos prochains coffres avec !coffres + ID")
 async def coffres(context):
   url = "https://api.royaleapi.com/player/" + bdd[str(context.message.author)] + "/chests"
   headers = {
