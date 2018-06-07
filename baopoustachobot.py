@@ -94,7 +94,7 @@ async def gdc():
 
 @client.command(description="Plus d'informations sur le clan avec !clan")
 async def clan():
-  url = "https://api.royaleapi.com/player/" + tag + "/chests"
+  url = "https://api.royaleapi.com/clan/9C2CQYGY"
   headers = {
       'auth': CR_TOKEN
       }
@@ -109,25 +109,35 @@ async def clan():
 
 @client.command(description="Quels seront vos prochains coffres avec !coffres + ID")
 async def coffres(tag):
-  url = "https://api.royaleapi.com/clan/9C2CQYGY"
+  url = "https://api.royaleapi.com/player/" + tag + "/chests"
   headers = {
       'auth': CR_TOKEN
       }
   response = requests.request("GET", url, headers=headers)
   data = response.json()
 
+
+  await client.say('Les prochains coffre pour cet ID (' + str(tag) + ') :' + '\n' +
+                   "- Géant dans : " + str(data["giant"]+1) + " coffres \n" +
+                   "- Epic dans : " + str(data["epic"]+1) + " coffres \n" +
+                   "- Magique dans : " + str(data["magical"]+1) + " coffres \n" +
+                   "- Super Magique: " + str(data["superMagical"]+1) + " coffres \n" +
+                   "- Légendaire dans : " + str(data["legendary"]+1))
+
   upcoming_chests = []
+
   for chest in data["upcoming"]:
     upcoming_chests.append(chest)
 
-  await client.say('Les prochains coffre pour cet ID (' + str(tag) + ') :' + '\n' +
-                   upcoming_chests + "\n" +
-                   "- Géant dans : " + str(data["giant"]) + "coffres \n" +
-                   "- Epic dans : " + str(data["epic"]) + "coffres \n" +
-                   "- Magique dans : " + str(data["magical"]) + "coffres \n" +
-                   "- Super Magique: " + str(data["superMagical"]) + "coffres \n" +
-                   "- Légendaire dans : " + str(data["legendary"]))
 
+  await client.say("Les 5 prochains coffres sont : \n" +
+                   "1 - " + str(upcoming_chests[0].title()) + "\n" +
+                   "2 - " + str(upcoming_chests[1].title()) + "\n" +
+                   "3 - " + str(upcoming_chests[2].title()) + "\n" +
+                   "4 - " + str(upcoming_chests[3].title()) + "\n" +
+                   "5 - " + str(upcoming_chests[4].title()))
+
+  # import pdb; pdb.set_trace()
 
 async def list_servers():
     await client.wait_until_ready()
