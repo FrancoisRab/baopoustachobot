@@ -6,12 +6,15 @@ from discord.ext.commands import Bot
 from discord import Game
 
 
-TOKEN = os.environ['TOKEN']
-CR_TOKEN = os.environ['CR_TOKEN']
+#TOKEN = os.environ['TOKEN']
+#CR_TOKEN = os.environ['CR_TOKEN']
 BOT_PREFIX = ('?', '!')
 
-client = Bot(command_prefix=BOT_PREFIX)
+TOKEN = 'NDU0MDE5MTc0NzQ3MDc4NjY3.DfnaVg.rRMcTuWdUMSg5grmMhJ9hvPhumQ'
+CR_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODA2LCJpZGVuIjoiMjAwMjMyMTAyNzUzNDY4NDE2IiwibWQiOnt9LCJ0cyI6MTUyODMyMTg2NzYzOH0.CPCUq-RK0FEDlNdl9XUUwJ2YnnmJvwa4HJRQRue5LvM"
 
+client = Bot(command_prefix=BOT_PREFIX)
+bdd = {}
 
 @client.event
 async def on_ready():
@@ -30,9 +33,19 @@ async def hello(context):
 
   await client.say(random.choice(possible_responses) + context.message.author.mention)
 
-@client.command(description="tape !stats + ID pour obtenir les stats du joueur. ex: !stats 92JV0PL8U")
-async def stats(tag):
-  url = "https://api.royaleapi.com/player/" + tag
+@client.command(pass_context=True,
+                description="Enregistrer votre ID avec !tag")
+async def tag(context, tag):
+  #import pdb; pdb.set_trace()
+  bdd[str(context.message.author)] = tag
+  await client.say("ID : " + str(tag) + " enregistré sous le pseudo > " + str(context.message.author))
+  await client.say("Dorénavant vous pouvez utiliser !stats et !coffres")
+
+
+@client.command(pass_context=True,
+                description="tape !stats + ID pour obtenir les stats du joueur. ex: !stats 92JV0PL8U")
+async def stats(context):
+  url = "https://api.royaleapi.com/player/" + bdd[str(context.message.author)]
   headers = {
       'auth': CR_TOKEN
       }
@@ -103,9 +116,10 @@ async def clan():
                    "- Membres: " + str(data["memberCount"]) + "/50 \n" +
                    "- Dons: " + str(data["donations"]))
 
-@client.command(description="Quels seront vos prochains coffres avec !coffres + ID")
-async def coffres(tag):
-  url = "https://api.royaleapi.com/player/" + tag + "/chests"
+@client.command(pass_context=True,
+                description="Quels seront vos prochains coffres avec !coffres + ID")
+async def coffres(context):
+  url = "https://api.royaleapi.com/player/" + bdd[str(context.message.author)] + "/chests"
   headers = {
       'auth': CR_TOKEN
       }
