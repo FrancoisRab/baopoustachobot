@@ -46,14 +46,14 @@ async def stats(tag):
                    "- Trophées actuel : " + str(data['trophies']) + "\n" +
                    "- Trophées max : " + str(data["stats"]["maxTrophies"]) + "\n" +
                    "- Arène : " + str(data["arena"]["arenaID"]) + "\n" +
-                   "- Ta carte favorite : " + data["stats"]["favoriteCard"]["name"])
+                   "- Carte favorite : " + data["stats"]["favoriteCard"]["name"])
 
   if data["stats"]["totalDonations"] >= 20000:
-    await client.say("Tu es un donateur hors pair avec tes " + str(data["stats"]["totalDonations"]) + " dons !")
+    await client.say("Donateur hors pair avec tes " + str(data["stats"]["totalDonations"]) + " dons !")
   elif data["stats"]["totalDonations"] >= 5000:
-    await client.say("Tu es un donateur sympatique " + str(data["stats"]["totalDonations"]) + " dons !")
+    await client.say("Donateur sympatique avec " + str(data["stats"]["totalDonations"]) + " dons !")
   else:
-    await client.say("Bah alors, tu es tout jeune avec tes " + str(data["stats"]["totalDonations"]) + " dons !")
+    await client.say("Donateur timide avec " + str(data["stats"]["totalDonations"]) + " dons !")
 
   await client.say("Decklink : " + data["deckLink"])
 
@@ -81,8 +81,8 @@ async def gdc():
     battles = data["clan"]["participants"] - data["clan"]["battlesPlayed"]
     await client.say("Jour de guerre : " + "\n" +
                      "- Participants : " + str(data["clan"]["participants"]) + "\n" +
-                     "- " + str(battles) + " joueurs n'ont pas encore fait leur match de guerre" + "\n" +
-                     " - Les Baopoustaches sont actuellement : #" + str(baopoustache_position))
+                     "- Position actuelle : #" + str(baopoustache_position) "\n" +
+                     "- " + str(battles) + " joueurs n'ont pas encore fait leur match de guerre")
 
 @client.command(description="Plus d'informations sur le clan avec !clan")
 async def clan():
@@ -98,6 +98,7 @@ async def clan():
                    "- Score: " + str(data["score"]) + "\n" +
                    "- Membres: " + str(data["memberCount"]) + "/50 \n" +
                    "- Dons: " + str(data["donations"]))
+
 async def list_servers():
     await client.wait_until_ready()
     while not client.is_closed:
