@@ -186,4 +186,21 @@ async def coffres(context):
                    "4 - " + str(upcoming_chests[3].title()) + "\n" +
                    "5 - " + str(upcoming_chests[4].title()))
 
+
+bot.remove_command('help')
+@bot.command()
+async def help(ctx)
+  embed = discord.Embed(title="Panneau d'aide du BaopoustachoBot", description="Liste des commandes:", color=0xeee657)
+
+  embed.add_field(name="!tag + ID", value="Permet d'enregistrer ton ID et d'accéder à **!stats** & **!coffres**", inline=False)
+  embed.add_field(name="!stats", value="Accédez aux statistiques de votre compte", inline=False)
+  embed.add_field(name="!coffres", value="Découvrez vos prochains coffres", inline=False)
+  embed.add_field(name="!gdc", value="Où en est le clan dans sa guerre de clan ?", inline=False)
+  embed.add_field(name="!clan", value="Accédez aux informations du clan", inline=False)
+  embed.add_field(name="!hello", value="Dites moi bonjour, ça fait toujours plaisir !", inline=False)
+  embed.add_field(name="!bye", value="Et au revoir aussi...", inline=False)
+  embed.add_field(name="!love + @Pseudo", value="Dévoilez vos sentiments à la personne de vos rêves", inline=False)
+
+  await ctx.send(embed=embed)
+
 bot.run(TOKEN)
