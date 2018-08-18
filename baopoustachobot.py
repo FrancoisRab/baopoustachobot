@@ -22,7 +22,7 @@ bot = Bot(command_prefix=BOT_PREFIX)
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(game=Game(name="en test"))
+    await bot.change_presence(game=Game(name="Clash Royale"))
     print("Hop " + bot.user.name + " est connecté !")
 
 @bot.command(pass_context=True,
