@@ -192,6 +192,7 @@ async def clan():
 @bot.command(pass_context=True,
              description="Quels seront vos prochains coffres avec !coffres + ID")
 async def coffres(context):
+    username = str(context.message.author)
     with open('save.txt') as f:
           file = f.read()
           taglist = file.split('\n')
