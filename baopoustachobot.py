@@ -76,10 +76,8 @@ async def bye(context):
              aliases=['Tag'],
              description="Enregistrer votre ID avec !tag + ID")
 async def tag(context, tag):
+    # Writing new tag if doesn't exist
     username = str(context.message.author)
-    """
-    Writing new tag if doesn't exist
-    """
     write = False
     with open('save.txt') as f:
         file = f.read()
