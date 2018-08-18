@@ -192,7 +192,17 @@ async def clan():
 @bot.command(pass_context=True,
              description="Quels seront vos prochains coffres avec !coffres + ID")
 async def coffres(context):
-    url = "https://api.royaleapi.com/player/" + bdd[str(context.message.author)] + "/chests"
+    with open('save.txt') as f:
+          file = f.read()
+          taglist = file.split('\n')
+
+      for line in taglist:
+          elements = line.split()
+          for element in elements:
+              if element == username:
+                  tag = elements[2]
+
+    url = "https://api.royaleapi.com/player/" + tag + "/chests"
     headers = {
         'auth': CR_TOKEN
         }
@@ -200,7 +210,7 @@ async def coffres(context):
     data = response.json()
 
 
-    await bot.say('Les prochains coffres pour cet ID (' + bdd[str(context.message.author)] + ') :' + '\n' +
+    await bot.say('Les prochains coffres pour cet ID (' + tag + ') :' + '\n' +
                     "- Géant dans : " + str(data["giant"]+1) + " coffres \n" +
                     "- Epic dans : " + str(data["epic"]+1) + " coffres \n" +
                     "- Magique dans : " + str(data["magical"]+1) + " coffres \n" +
