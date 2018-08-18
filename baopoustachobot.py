@@ -196,11 +196,11 @@ async def coffres(context):
           file = f.read()
           taglist = file.split('\n')
 
-      for line in taglist:
-          elements = line.split()
-          for element in elements:
-              if element == username:
-                  tag = elements[2]
+    for line in taglist:
+        elements = line.split()
+        for element in elements:
+            if element == username:
+                tag = elements[2]
 
     url = "https://api.royaleapi.com/player/" + tag + "/chests"
     headers = {
